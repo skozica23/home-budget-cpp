@@ -1,20 +1,111 @@
-# Home Budget - C++ CLI Application
+# Home Budget App
 
-A simple command-line application for managing home finances, developed to learn and practice the fundamentals of Object-Oriented Programming (OOP) in C++.
+A simple C++ console application for tracking personal income and expenses.
 
-## 🚀 Features
-* **Add Transactions:** Log incomes and expenses with categories, amounts, and custom descriptions.
-* **Balance Calculation:** Automatically calculates the current balance with dynamic terminal color coding (Green for positive, Red for negative).
-* **Formatted History:** Displays all transactions in a clean, well-aligned table using `<iomanip>`.
-* **Data Persistence:** Save and load transaction history to/from a text file using a semicolon-separated format.
+The project was created to practice basic C++ programming concepts, including classes, objects, vectors, file handling, user input, and simple data persistence.
 
-## 🛠️ Concepts Learned & Applied
-* **Object-Oriented Programming:** Classes, encapsulation, constructors, and accessors (getters).
-* **File I/O:** Reading and writing data using `std::ifstream` and `std::ofstream`.
-* **STL Containers:** Managing dynamic data sequences with `std::vector`.
-* **String Manipulation:** Parsing data rows via `std::string::find` and `std::string::substr`.
+## Features
 
-## 📈 Future Improvements (Roadmap)
-* Refactor monolithic code into proper header (`.h`) and source (`.cpp`) files.
-* Remove `using namespace std;` to avoid namespace pollution.
-* Implement error handling (`try-catch` blocks) for safer file parsing (e.g., `std::stod` validation).
+- Add income and expense transactions
+- Store transaction data with date, category, type, amount, and description
+- Display all saved transactions in a formatted table
+- Calculate and display the current balance
+- Save transactions to a text file
+- Load transactions from a text file
+- Use basic terminal colors to distinguish income and expenses
+
+## Project Structure
+
+The code is planned to be organized into separate header and source files:
+
+```text
+HomeBudget/
+├── main.cpp
+├── transaction.h
+├── transaction.cpp
+├── budget.h
+└── budget.cpp
+```
+
+## File Responsibilities
+
+```text
+main.cpp
+```
+
+Contains the main menu and controls the flow of the program.
+
+```
+transaction.h
+```
+
+Declares the `Transaction` class. A header file describes what the class looks like and what functions are available.
+
+```
+transaction.cpp
+```
+
+Defines how the `Transaction` class functions actually work.
+
+```
+budget.h
+```
+
+Declares the `Budget` class, which stores and manages multiple transactions.
+
+```
+budget.cpp
+```
+
+Defines the logic for adding transactions, showing the balance, displaying all transactions, saving data, and loading data.
+
+## How To Compile
+
+Using `g++`:
+
+```bash
+g++ main.cpp transaction.cpp budget.cpp -o budget
+```
+
+## How To Run
+
+On macOS/Linux:
+
+```bash
+./budget
+```
+
+On Windows:
+
+```bash
+budget.exe
+```
+
+## What I Practiced
+
+- Creating and using classes
+- Constructor initialization lists
+- Getters and encapsulation
+- `std::vector`
+- Reading user input with `std::cin` and `std::getline`
+- File handling with `std::ifstream` and `std::ofstream`
+- Basic CSV-like file parsing
+- Formatting output with `std::setw`, `std::fixed`, and `std::setprecision`
+- Splitting code into `.h` and `.cpp` files
+- Avoiding `using namespace std;` in larger projects
+- Basic error handling while loading data from a file
+
+## Future Improvements Roadmap
+
+- [x] Refactor monolithic code into proper header (`.h`) and source (`.cpp`) files
+- [x] Remove `using namespace std;` to avoid namespace pollution
+- [x] Implement basic error handling for safer file parsing, including `std::stod` validation
+- [ ] Add input validation when adding a new transaction
+- [ ] Add option to delete a transaction
+- [ ] Add option to search or filter transactions by category
+- [ ] Add monthly income and expense summaries
+- [ ] Improve file format handling so descriptions can safely contain semicolons
+
+## Notes
+
+This is a learning project. The goal is not only to build a working budget application, but also to show gradual progress in C++ code organization, readability, and safer data handling.
