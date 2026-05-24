@@ -89,7 +89,7 @@ void Budget::showBalance() const {
 }
 
 void Budget::showAll() const {
-    std::cout << std::left << std::setw(12) << "Date"
+    std::cout << std::left << std::setw(5) << "Index" << std::setw(12) << "Date"
               << std::setw(15) << "Category"
               << std::setw(12) << "Type"
               << std::setw(10) << "Amount"
@@ -98,17 +98,20 @@ void Budget::showAll() const {
 
     std::cout << std::string(74, '-') << std::endl;
 
-    for (const auto &transaction : transactions) {
-        std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
+    for (size_t i = 0; i < transactions.size(); i++) {
+    const auto &transaction = transactions[i];
 
-        std::cout << std::left << std::setw(12) << transaction.getDate()
-                  << std::setw(15) << transaction.getCategory()
-                  << color << std::setw(12) << transaction.getType() << "\033[0m"
-                  << std::right << std::setw(10) << std::fixed << std::setprecision(2)
-                  << transaction.getAmount()
-                  << "  "
-                  << std::left << transaction.getDescription()
-                  << std::endl;
+    std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
+
+    std::cout << std::left << std::setw(5) << i + 1
+              << std::setw(12) << transaction.getDate()
+              << std::setw(15) << transaction.getCategory()
+              << color << std::setw(12) << transaction.getType() << "\033[0m"
+              << std::right << std::setw(10) << std::fixed << std::setprecision(2)
+              << transaction.getAmount()
+              << "  "
+              << std::left << transaction.getDescription()
+              << std::endl;
     }
 }
 
@@ -150,4 +153,50 @@ void Budget::load() {
     }
 
     std::cout << "Loaded.\n";
+}
+
+void Budget::remove() {
+    if (transactions.empty()) {
+        std::cout << "No transactions to remove.\n";
+        return;
+    }
+
+    size_t index;
+    do {
+        std::cout << "Enter the index of the transaction to remove: ";
+        std::cin >> index;
+
+        if (std::cin.fail() || index >= transactions.size()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid index. Please try again.\n";
+        }
+    } while (std::cin.fail() || index >= transactions.size());
+
+    transactions.erase(transactions.begin() + index);
+    std::cout << "Transaction removed.\n";
+}
+
+void Budget::showSummary() const {
+    double totalIncome = 0.0;
+    double totalExpenses = 0.0;
+
+    for (const auto &transaction : transactions) {
+        if (transaction.getType() == "income") {
+            totalIncome += transaction.getAmount();
+        } else if (transaction.getType() == "expense") {
+            totalExpenses += transaction.getAmount();
+        }
+    }
+
+    double balance = totalIncome - totalExpenses;
+
+    std::cout << "\n----- SUMMARY -----\n";
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "Total income:   " << totalIncome << " PLN\n";
+    std::cout << "Total expenses: " << totalExpenses << " PLN\n";
+
+    std::cout << (balance >= 0 ? "\033[32m" : "\033[31m");
+    std::cout << "Balance:        " << balance << " PLN\n";
+    std::cout << "\033[0m";
 }

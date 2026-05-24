@@ -101,9 +101,9 @@ main.exe
 - [x] Remove `using namespace std;` to avoid namespace pollution
 - [x] Implement basic error handling for safer file parsing, including `std::stod` validation
 - [x] Add input validation when adding a new transaction
-- [ ] Add option to delete a transaction
+- [x] Add option to delete a transaction
 - [ ] Add option to search or filter transactions by category
-- [ ] Add monthly income and expense summaries
+- [x] Add income and expense summaries
 - [ ] Improve file format handling so descriptions can safely contain semicolons
 
 ## Notes
