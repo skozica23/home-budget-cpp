@@ -12,22 +12,59 @@ void Budget::add() {
     std::string description;
     double amount;
 
-    std::cout << "Date: ";
-    std::cin >> date;
+    //DATE VALIDATION
+    do {
+        std::cout << "Date (YYYY-MM-DD): ";
+        std::cin >> date;
+        if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
+            std::cout << "Invalid date format. Please use YYYY-MM-DD.\n";
+            date.clear();
+        }
+    } while (date.empty());
 
-    std::cout << "Category: ";
-    std::cin >> category;
+    //CATEGORY VALIDATION
+    do {
+        std::cout << "Category: ";
+        std::cin >> category;
+        if (category.empty()) {
+            std::cout << "Category cannot be empty.\n";
+        }
+    } while (category.empty());
 
-    std::cout << "Type (income/expense): ";
-    std::cin >> type;
+    //TYPE VALIDATION
+    do {
+        std::cout << "Type (income/expense): ";
+        std::cin >> type;
 
-    std::cout << "Amount: ";
-    std::cin >> amount;
+        if (type != "income" && type != "expense") {
+            std::cout << "Invalid type. Please enter 'income' or 'expense'.\n";
+        }
+    } while (type != "income" && type != "expense");
+
+    //AMOUNT VALIDATION
+   do {
+        std::cout << "Amount: ";
+        std::cin >> amount;
+
+        if (std::cin.fail() || amount <= 0) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid amount. Please enter a number greater than 0.\n";
+            amount = 0;
+        }
+    } while (amount <= 0);
 
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    std::cout << "Description: ";
-    std::getline(std::cin, description);
+    //DESCRIPTION VALIDATION
+    do {
+        std::cout << "Description: ";
+        std::getline(std::cin, description);
+
+        if (description.find(';') != std::string::npos) {
+            std::cout << "Description cannot contain semicolons.\n";
+        }
+    } while (description.find(';') != std::string::npos);
 
     transactions.emplace_back(date, category, type, amount, description);
 

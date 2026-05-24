@@ -72,13 +72,13 @@ g++ main.cpp transaction.cpp budget.cpp -o budget
 On macOS/Linux:
 
 ```bash
-./budget
+./main
 ```
 
 On Windows:
 
 ```bash
-budget.exe
+main.exe
 ```
 
 ## What I Practiced
@@ -100,7 +100,7 @@ budget.exe
 - [x] Refactor monolithic code into proper header (`.h`) and source (`.cpp`) files
 - [x] Remove `using namespace std;` to avoid namespace pollution
 - [x] Implement basic error handling for safer file parsing, including `std::stod` validation
-- [ ] Add input validation when adding a new transaction
+- [x] Add input validation when adding a new transaction
 - [ ] Add option to delete a transaction
 - [ ] Add option to search or filter transactions by category
 - [ ] Add monthly income and expense summaries
