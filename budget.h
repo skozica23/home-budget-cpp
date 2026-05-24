@@ -15,6 +15,8 @@ public:
     void showAll() const;
     void save() const;
     void load();
+    void remove();
+    void showSummary() const;
 };
 
 #endif

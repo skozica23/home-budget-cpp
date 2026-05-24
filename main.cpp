@@ -14,6 +14,8 @@ int main() {
                   << "\n3. All"
                   << "\n4. Save"
                   << "\n5. Load"
+                  << "\n6. Remove"
+                  << "\n7. Summary"
                   << "\n0. Exit"
                   << "\n\nChoice: ";
 
@@ -41,6 +43,12 @@ int main() {
                 break;
             case 5:
                 budget.load();
+                break;
+            case 6:
+                budget.remove();
+                break;
+            case 7:
+                budget.showSummary();
                 break;
             case 0:
                 break;
