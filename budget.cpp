@@ -1,9 +1,18 @@
 #include "budget.h"
-
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <cctype>
 #include <limits>
+
+// Converts a string to lowercase for case-insensitive comparisons
+static std::string toLowerCase(std::string text) {
+    for (char &character : text) {
+        character = std::tolower(static_cast<unsigned char>(character));
+    }
+
+    return text;
+}
 
 void Budget::add() {
     std::string date;
@@ -166,14 +175,14 @@ void Budget::remove() {
         std::cout << "Enter the index of the transaction to remove: ";
         std::cin >> index;
 
-        if (std::cin.fail() || index >= transactions.size()) {
+        if (std::cin.fail() || index < 1 || index > transactions.size()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid index. Please try again.\n";
         }
     } while (std::cin.fail() || index >= transactions.size());
 
-    transactions.erase(transactions.begin() + index);
+    transactions.erase(transactions.begin() + index - 1);
     std::cout << "Transaction removed.\n";
 }
 
@@ -199,4 +208,52 @@ void Budget::showSummary() const {
     std::cout << (balance >= 0 ? "\033[32m" : "\033[31m");
     std::cout << "Balance:        " << balance << " PLN\n";
     std::cout << "\033[0m";
+}
+
+void Budget::filterByCategory() const {
+    if (transactions.empty()) {
+        std::cout << "No transactions to filter.\n";
+        return;
+    }
+
+    std::string category;
+    bool found = false;
+
+    std::cout << "Enter category: ";
+    std::cin >> category;
+    
+    std::string searchedCategory = toLowerCase(category);
+
+    std::cout << std::left << std::setw(5) << "No."
+              << std::setw(12) << "Date"
+              << std::setw(15) << "Category"
+              << std::setw(12) << "Type"
+              << std::setw(10) << "Amount"
+              << std::setw(25) << "Description"
+              << "\n";
+
+    std::cout << std::string(79, '-') << std::endl;
+
+    for (size_t i = 0; i < transactions.size(); i++) {
+        const auto &transaction = transactions[i];
+
+        if (toLowerCase(transaction.getCategory()) == searchedCategory) {            std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
+
+            std::cout << std::left << std::setw(5) << i + 1
+                      << std::setw(12) << transaction.getDate()
+                      << std::setw(15) << transaction.getCategory()
+                      << color << std::setw(12) << transaction.getType() << "\033[0m"
+                      << std::right << std::setw(10) << std::fixed << std::setprecision(2)
+                      << transaction.getAmount()
+                      << "  "
+                      << std::left << transaction.getDescription()
+                      << std::endl;
+
+            found = true;
+        }
+    }
+
+    if (!found) {
+        std::cout << "No transactions found in this category.\n";
+    }
 }
