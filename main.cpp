@@ -16,6 +16,7 @@ int main() {
                   << "\n5. Load"
                   << "\n6. Remove"
                   << "\n7. Summary"
+                  << "\n8. Filter by Category"
                   << "\n0. Exit"
                   << "\n\nChoice: ";
 
@@ -49,6 +50,9 @@ int main() {
                 break;
             case 7:
                 budget.showSummary();
+                break;
+            case 8:
+                budget.filterByCategory();
                 break;
             case 0:
                 break;

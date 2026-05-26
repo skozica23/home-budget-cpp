@@ -17,6 +17,7 @@ public:
     void load();
     void remove();
     void showSummary() const;
+    void filterByCategory() const;
 };
 
 #endif
