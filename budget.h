@@ -18,6 +18,7 @@ public:
     void remove();
     void showSummary() const;
     void filterByCategory() const;
+    void sortTransactions();
 };
 
 #endif
