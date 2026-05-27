@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <cctype>
 #include <limits>
+#include <algorithm>
 
 // Converts a string to lowercase for case-insensitive comparisons
 static std::string toLowerCase(std::string text) {
@@ -31,14 +32,18 @@ void Budget::add() {
         }
     } while (date.empty());
 
-    //CATEGORY VALIDATION
-    do {
-        std::cout << "Category: ";
-        std::cin >> category;
-        if (category.empty()) {
-            std::cout << "Category cannot be empty.\n";
-        }
-    } while (category.empty());
+   // CATEGORY VALIDATION
+do {
+    std::cout << "Category: ";
+    std::cin >> category;
+
+    if (category.empty()) {
+        std::cout << "Category cannot be empty.\n";
+    } else if (category.find(';') != std::string::npos) {
+        std::cout << "Category cannot contain semicolons.\n";
+        category.clear();
+    }
+} while (category.empty());
 
     //TYPE VALIDATION
     do {
@@ -255,5 +260,53 @@ void Budget::filterByCategory() const {
 
     if (!found) {
         std::cout << "No transactions found in this category.\n";
+    }
+}
+
+void Budget::sortTransactions() {
+    if (transactions.empty()) {
+        std::cout << "No transactions to sort.\n";
+        return;
+    }
+
+    int choice;
+
+    std::cout << "\n----- SORT TRANSACTIONS -----"
+              << "\n1. Sort by date"
+              << "\n2. Sort by amount"
+              << "\n0. Back"
+              << "\n\nChoice: ";
+
+    std::cin >> choice;
+
+    if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Please enter a valid number.\n";
+        return;
+    }
+
+    switch (choice) {
+        case 1:
+            std::sort(transactions.begin(), transactions.end(),
+                      [](const Transaction &a, const Transaction &b) {
+                          return a.getDate() < b.getDate();
+                      });
+            std::cout << "Transactions sorted by date.\n";
+            break;
+
+        case 2:
+            std::sort(transactions.begin(), transactions.end(),
+                      [](const Transaction &a, const Transaction &b) {
+                          return a.getAmount() < b.getAmount();
+                      });
+            std::cout << "Transactions sorted by amount.\n";
+            break;
+
+        case 0:
+            break;
+
+        default:
+            std::cout << "Please choose a number from the menu.\n";
     }
 }

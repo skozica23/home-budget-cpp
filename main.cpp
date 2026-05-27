@@ -17,6 +17,7 @@ int main() {
                   << "\n6. Remove"
                   << "\n7. Summary"
                   << "\n8. Filter by Category"
+                  << "\n9. Sort Transactions"
                   << "\n0. Exit"
                   << "\n\nChoice: ";
 
@@ -54,6 +55,8 @@ int main() {
             case 8:
                 budget.filterByCategory();
                 break;
+            case 9:
+                budget.sortTransactions();
             case 0:
                 break;
             default:

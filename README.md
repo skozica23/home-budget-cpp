@@ -104,7 +104,9 @@ main.exe
 - [x] Add option to delete a transaction
 - [x] Add option to search or filter transactions by category
 - [x] Add income and expense summaries
-- [ ] Improve file format handling so descriptions can safely contain semicolons
+- [x] Prevent semicolons in fields saved to the transaction file
+- [x] Add transactions sorting
+
 
 ## Notes
 
