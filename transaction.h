@@ -25,6 +25,12 @@ public:
     double getAmount() const;
 
     void save(std::ofstream &file) const;
+    
+    void setDate(const std::string &newDate);
+    void setCategory(const std::string &newCategory);
+    void setType(const std::string &newType);
+    void setDescription(const std::string &newDescription);
+    void setAmount(double newAmount);
 
     static Transaction fromLine(const std::string &line);
 };

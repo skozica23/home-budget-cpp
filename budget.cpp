@@ -310,3 +310,94 @@ void Budget::sortTransactions() {
             std::cout << "Please choose a number from the menu.\n";
     }
 }
+
+void Budget::edit() {
+    if (transactions.empty()) {
+        std::cout << "No transactions to edit.\n";
+        return;
+    }
+
+    showAll();
+
+    size_t index;
+
+    std::cout << "Enter the index of the transaction to edit: ";
+    std::cin >> index;
+
+    if (std::cin.fail() || index < 1 || index > transactions.size()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid index. Please try again.\n";
+        return;
+    }
+
+    Transaction &transaction = transactions[index - 1];
+
+    std::string date;
+    std::string category;
+    std::string type;
+    std::string description;
+    double amount;
+
+    do {
+        std::cout << "New date (YYYY-MM-DD): ";
+        std::cin >> date;
+
+        if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
+            std::cout << "Invalid date format. Please use YYYY-MM-DD.\n";
+            date.clear();
+        }
+    } while (date.empty());
+
+    do {
+        std::cout << "New category: ";
+        std::cin >> category;
+
+        if (category.empty()) {
+            std::cout << "Category cannot be empty.\n";
+        } else if (category.find(';') != std::string::npos) {
+            std::cout << "Category cannot contain semicolons.\n";
+            category.clear();
+        }
+    } while (category.empty());
+
+    do {
+        std::cout << "New type (income/expense): ";
+        std::cin >> type;
+
+        if (type != "income" && type != "expense") {
+            std::cout << "Invalid type. Please enter 'income' or 'expense'.\n";
+        }
+    } while (type != "income" && type != "expense");
+
+    do {
+        std::cout << "New amount: ";
+        std::cin >> amount;
+
+        if (std::cin.fail() || amount <= 0) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid amount. Please enter a number greater than 0.\n";
+            amount = 0;
+        }
+    } while (amount <= 0);
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    do {
+        std::cout << "New description: ";
+        std::getline(std::cin, description);
+
+        if (description.find(';') != std::string::npos) {
+            std::cout << "Description cannot contain semicolons.\n";
+        }
+    } while (description.find(';') != std::string::npos);
+
+    transaction.setDate(date);
+    transaction.setCategory(category);
+    transaction.setType(type);
+    transaction.setAmount(amount);
+    transaction.setDescription(description);
+
+    std::cout << "Transaction updated.\n";
+}

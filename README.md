@@ -106,7 +106,9 @@ main.exe
 - [x] Add income and expense summaries
 - [x] Prevent semicolons in fields saved to the transaction file
 - [x] Add transactions sorting
-
+- [x] Add transactions editing
+- [ ] Add CMake build configuration
+- [ ] Move storage do SQLite 
 
 ## Notes
 
