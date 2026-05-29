@@ -19,6 +19,7 @@ public:
     void showSummary() const;
     void filterByCategory() const;
     void sortTransactions();
+    void edit();
 };
 
 #endif

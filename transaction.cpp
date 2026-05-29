@@ -62,3 +62,23 @@ Transaction Transaction::fromLine(const std::string &line) {
         data[4]
     );
 }
+
+void Transaction::setDate(const std::string &newDate) {
+    date = newDate;
+}
+
+void Transaction::setCategory(const std::string &newCategory) {
+    category = newCategory;
+}
+
+void Transaction::setType(const std::string &newType) {
+    type = newType;
+}
+
+void Transaction::setDescription(const std::string &newDescription) {
+    description = newDescription;
+}
+
+void Transaction::setAmount(double newAmount) {
+    amount = newAmount;
+}
