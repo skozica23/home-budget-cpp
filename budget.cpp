@@ -5,6 +5,7 @@
 #include <cctype>
 #include <limits>
 #include <algorithm>
+#include <nlohmann/json.hpp>
 
 // Converts a string to lowercase for case-insensitive comparisons
 static std::string toLowerCase(std::string text) {
@@ -130,43 +131,55 @@ void Budget::showAll() const {
 }
 
 void Budget::save() const {
-    std::ofstream file("budget.txt");
+    std::ofstream file("budget.json");
 
     if (!file) {
         std::cout << "Error: Could not open file for saving.\n";
         return;
     }
 
+    nlohmann::json transactionsJson = nlohmann::json::array();
+
     for (const auto &transaction : transactions) {
-        transaction.save(file);
+        transactionsJson.push_back(transaction.toJson());
     }
+
+    file << transactionsJson.dump(4);
 
     std::cout << "Saved.\n";
 }
 
 void Budget::load() {
-    std::ifstream file("budget.txt");
+    std::ifstream file("budget.json");
 
     if (!file) {
         std::cout << "Error: Could not open file for loading.\n";
         return;
     }
 
-    transactions.clear();
+    try {
+        nlohmann::json transactionsJson;
+        file >> transactionsJson;
 
-    std::string line;
+        if (!transactionsJson.is_array()) {
+            std::cout << "Error: Invalid JSON format. Expected an array.\n";
+            return;
+        }
 
-    while (std::getline(file, line)) {
-        if (!line.empty()) {
+        transactions.clear();
+
+        for (const auto &item : transactionsJson) {
             try {
-                transactions.push_back(Transaction::fromLine(line));
+                transactions.push_back(Transaction::fromJson(item));
             } catch (const std::exception &error) {
-                std::cout << "Skipped invalid line: " << line << "\n";
+                std::cout << "Skipped invalid transaction: " << error.what() << "\n";
             }
         }
-    }
 
-    std::cout << "Loaded.\n";
+        std::cout << "Loaded.\n";
+    } catch (const std::exception &error) {
+        std::cout << "Error: Could not parse JSON file: " << error.what() << "\n";
+    }
 }
 
 void Budget::remove() {

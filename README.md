@@ -10,8 +10,8 @@ The project was created to practice basic C++ programming concepts, including cl
 - Store transaction data with date, category, type, amount, and description
 - Display all saved transactions in a formatted table
 - Calculate and display the current balance
-- Save transactions to a text file
-- Load transactions from a text file
+- Save transactions to a JSON file
+- Load transactions from a JSON file
 - Use basic terminal colors to distinguish income and expenses
 
 ## Project Structure
@@ -99,6 +99,7 @@ After compiling manually with `g++`:
 - Reading user input with `std::cin` and `std::getline`
 - File handling with `std::ifstream` and `std::ofstream`
 - Basic CSV-like file parsing
+- JSON serialization with `nlohmann/json`
 - Formatting output with `std::setw`, `std::fixed`, and `std::setprecision`
 - Splitting code into `.h` and `.cpp` files
 - Avoiding `using namespace std;` in larger projects
@@ -117,6 +118,7 @@ After compiling manually with `g++`:
 - [x] Add transactions sorting
 - [x] Add transactions editing
 - [x] Add CMake build configuration
+- [x] Replace text file storage with JSON
 - [ ] Move storage to SQLite
 
 ## Notes
