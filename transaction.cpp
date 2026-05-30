@@ -82,3 +82,23 @@ void Transaction::setDescription(const std::string &newDescription) {
 void Transaction::setAmount(double newAmount) {
     amount = newAmount;
 }
+
+nlohmann::json Transaction::toJson() const {
+    return {
+        {"date", date},
+        {"category", category},
+        {"type", type},
+        {"amount", amount},
+        {"description", description}
+    };
+}
+
+Transaction Transaction::fromJson(const nlohmann::json &json) {
+    return Transaction(
+        json.at("date").get<std::string>(),
+        json.at("category").get<std::string>(),
+        json.at("type").get<std::string>(),
+        json.at("amount").get<double>(),
+        json.at("description").get<std::string>()
+    );
+}

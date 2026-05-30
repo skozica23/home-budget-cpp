@@ -1,8 +1,10 @@
 .DS_Store
 bugdet
 budget
+budget.json
 main
 test
 build/
 *.out
 *.exe
+.vscode/

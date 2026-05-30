@@ -1,0 +1,352 @@
+[
+    {
+        "date": "2026-05-01",
+        "category": "salary",
+        "type": "income",
+        "amount": 5000.0,
+        "description": "monthly salary"
+    },
+    {
+        "date": "2026-05-01",
+        "category": "rent",
+        "type": "expense",
+        "amount": 1800.0,
+        "description": "monthly rent"
+    },
+    {
+        "date": "2026-05-02",
+        "category": "food",
+        "type": "expense",
+        "amount": 64.35,
+        "description": "grocery shopping"
+    },
+    {
+        "date": "2026-05-02",
+        "category": "transport",
+        "type": "expense",
+        "amount": 18.0,
+        "description": "tram tickets"
+    },
+    {
+        "date": "2026-05-03",
+        "category": "coffee",
+        "type": "expense",
+        "amount": 16.5,
+        "description": "coffee with friend"
+    },
+    {
+        "date": "2026-05-03",
+        "category": "freelance",
+        "type": "income",
+        "amount": 750.0,
+        "description": "small website fix"
+    },
+    {
+        "date": "2026-05-04",
+        "category": "food",
+        "type": "expense",
+        "amount": 42.9,
+        "description": "lunch"
+    },
+    {
+        "date": "2026-05-04",
+        "category": "health",
+        "type": "expense",
+        "amount": 55.0,
+        "description": "pharmacy"
+    },
+    {
+        "date": "2026-05-05",
+        "category": "subscriptions",
+        "type": "expense",
+        "amount": 49.99,
+        "description": "music subscription"
+    },
+    {
+        "date": "2026-05-05",
+        "category": "education",
+        "type": "expense",
+        "amount": 129.0,
+        "description": "online programming course"
+    },
+    {
+        "date": "2026-05-06",
+        "category": "food",
+        "type": "expense",
+        "amount": 88.2,
+        "description": "weekly groceries"
+    },
+    {
+        "date": "2026-05-06",
+        "category": "transport",
+        "type": "expense",
+        "amount": 120.0,
+        "description": "monthly public transport pass"
+    },
+    {
+        "date": "2026-05-07",
+        "category": "bonus",
+        "type": "income",
+        "amount": 300.0,
+        "description": "performance bonus"
+    },
+    {
+        "date": "2026-05-07",
+        "category": "clothes",
+        "type": "expense",
+        "amount": 149.9,
+        "description": "new shirt"
+    },
+    {
+        "date": "2026-05-08",
+        "category": "utilities",
+        "type": "expense",
+        "amount": 230.45,
+        "description": "electricity bill"
+    },
+    {
+        "date": "2026-05-08",
+        "category": "internet",
+        "type": "expense",
+        "amount": 69.99,
+        "description": "home internet"
+    },
+    {
+        "date": "2026-05-09",
+        "category": "food",
+        "type": "expense",
+        "amount": 37.5,
+        "description": "breakfast"
+    },
+    {
+        "date": "2026-05-09",
+        "category": "entertainment",
+        "type": "expense",
+        "amount": 80.0,
+        "description": "cinema tickets"
+    },
+    {
+        "date": "2026-05-10",
+        "category": "gift",
+        "type": "expense",
+        "amount": 120.0,
+        "description": "birthday gift"
+    },
+    {
+        "date": "2026-05-10",
+        "category": "refund",
+        "type": "income",
+        "amount": 45.0,
+        "description": "returned item refund"
+    },
+    {
+        "date": "2026-05-11",
+        "category": "food",
+        "type": "expense",
+        "amount": 56.8,
+        "description": "dinner"
+    },
+    {
+        "date": "2026-05-11",
+        "category": "home",
+        "type": "expense",
+        "amount": 89.99,
+        "description": "cleaning supplies"
+    },
+    {
+        "date": "2026-05-12",
+        "category": "freelance",
+        "type": "income",
+        "amount": 1100.0,
+        "description": "landing page project"
+    },
+    {
+        "date": "2026-05-12",
+        "category": "software",
+        "type": "expense",
+        "amount": 59.0,
+        "description": "developer tool license"
+    },
+    {
+        "date": "2026-05-13",
+        "category": "transport",
+        "type": "expense",
+        "amount": 35.0,
+        "description": "taxi ride"
+    },
+    {
+        "date": "2026-05-13",
+        "category": "food",
+        "type": "expense",
+        "amount": 24.5,
+        "description": "sandwich"
+    },
+    {
+        "date": "2026-05-14",
+        "category": "health",
+        "type": "expense",
+        "amount": 180.0,
+        "description": "doctor appointment"
+    },
+    {
+        "date": "2026-05-14",
+        "category": "fitness",
+        "type": "expense",
+        "amount": 99.0,
+        "description": "gym membership"
+    },
+    {
+        "date": "2026-05-15",
+        "category": "salary",
+        "type": "income",
+        "amount": 500.0,
+        "description": "extra shift"
+    },
+    {
+        "date": "2026-05-15",
+        "category": "food",
+        "type": "expense",
+        "amount": 103.25,
+        "description": "restaurant"
+    },
+    {
+        "date": "2026-05-16",
+        "category": "travel",
+        "type": "expense",
+        "amount": 260.0,
+        "description": "train tickets"
+    },
+    {
+        "date": "2026-05-16",
+        "category": "books",
+        "type": "expense",
+        "amount": 74.9,
+        "description": "cpp book"
+    },
+    {
+        "date": "2026-05-17",
+        "category": "food",
+        "type": "expense",
+        "amount": 31.2,
+        "description": "snacks"
+    },
+    {
+        "date": "2026-05-17",
+        "category": "family",
+        "type": "expense",
+        "amount": 200.0,
+        "description": "family support"
+    },
+    {
+        "date": "2026-05-18",
+        "category": "freelance",
+        "type": "income",
+        "amount": 450.0,
+        "description": "bug fixing task"
+    },
+    {
+        "date": "2026-05-18",
+        "category": "electronics",
+        "type": "expense",
+        "amount": 199.99,
+        "description": "keyboard"
+    },
+    {
+        "date": "2026-05-19",
+        "category": "food",
+        "type": "expense",
+        "amount": 67.4,
+        "description": "groceries"
+    },
+    {
+        "date": "2026-05-19",
+        "category": "charity",
+        "type": "expense",
+        "amount": 50.0,
+        "description": "donation"
+    },
+    {
+        "date": "2026-05-20",
+        "category": "refund",
+        "type": "income",
+        "amount": 89.99,
+        "description": "software refund"
+    },
+    {
+        "date": "2026-05-20",
+        "category": "coffee",
+        "type": "expense",
+        "amount": 14.0,
+        "description": "morning coffee"
+    },
+    {
+        "date": "2026-05-21",
+        "category": "utilities",
+        "type": "expense",
+        "amount": 95.3,
+        "description": "water bill"
+    },
+    {
+        "date": "2026-05-21",
+        "category": "food",
+        "type": "expense",
+        "amount": 49.9,
+        "description": "takeaway"
+    },
+    {
+        "date": "2026-05-22",
+        "category": "education",
+        "type": "expense",
+        "amount": 39.99,
+        "description": "ebook"
+    },
+    {
+        "date": "2026-05-22",
+        "category": "side_project",
+        "type": "income",
+        "amount": 250.0,
+        "description": "small app customization"
+    },
+    {
+        "date": "2026-05-23",
+        "category": "transport",
+        "type": "expense",
+        "amount": 22.0,
+        "description": "bus tickets"
+    },
+    {
+        "date": "2026-05-23",
+        "category": "home",
+        "type": "expense",
+        "amount": 130.0,
+        "description": "kitchen accessories"
+    },
+    {
+        "date": "2026-05-24",
+        "category": "entertainment",
+        "type": "expense",
+        "amount": 65.0,
+        "description": "board game night"
+    },
+    {
+        "date": "2026-05-24",
+        "category": "food",
+        "type": "expense",
+        "amount": 76.6,
+        "description": "weekend groceries"
+    },
+    {
+        "date": "2026-05-25",
+        "category": "freelance",
+        "type": "income",
+        "amount": 980.0,
+        "description": "portfolio website"
+    },
+    {
+        "date": "2026-05-25",
+        "category": "personal_care",
+        "type": "expense",
+        "amount": 70.0,
+        "description": "haircut"
+    }
+]
