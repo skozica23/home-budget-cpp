@@ -90,6 +90,25 @@ After compiling manually with `g++`:
 ./main
 ```
 
+## Sample Data
+
+The application saves and loads user data from `budget.json`.
+
+This file is ignored by Git because it may contain private personal finance data. A sample file is included as `sample-budget.json` so the program can be tested quickly with example transactions.
+
+To use the sample data, copy it to `budget.json`:
+
+```bash
+cp sample-budget.json budget.json
+```
+
+Then run the app and choose:
+
+```
+5. Load
+3. All
+```
+
 ## What I Practiced
 
 - Creating and using classes
