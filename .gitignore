@@ -1,6 +1,8 @@
 .DS_Store
 bugdet
+budget
 main
 test
+build/
 *.out
 *.exe

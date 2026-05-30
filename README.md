@@ -59,26 +59,35 @@ budget.cpp
 
 Defines the logic for adding transactions, showing the balance, displaying all transactions, saving data, and loading data.
 
-## How To Compile
+## How To Build
 
-Using `g++`:
+Using CMake:
 
 ```bash
-g++ main.cpp transaction.cpp budget.cpp -o budget
+cmake -S . -B build
+cmake --build build
+```
+
+The executable will be created in the `build` directory.
+
+You can also compile manually with `g++`:
+
+```bash
+g++ main.cpp budget.cpp transaction.cpp -o main
 ```
 
 ## How To Run
 
-On macOS/Linux:
+After building with CMake:
+
+```bash
+./build/home_budget
+```
+
+After compiling manually with `g++`:
 
 ```bash
 ./main
-```
-
-On Windows:
-
-```bash
-main.exe
 ```
 
 ## What I Practiced
@@ -107,8 +116,8 @@ main.exe
 - [x] Prevent semicolons in fields saved to the transaction file
 - [x] Add transactions sorting
 - [x] Add transactions editing
-- [ ] Add CMake build configuration
-- [ ] Move storage do SQLite 
+- [x] Add CMake build configuration
+- [ ] Move storage to SQLite
 
 ## Notes
 
