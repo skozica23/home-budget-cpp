@@ -2,6 +2,9 @@
 bugdet
 budget
 budget.json
+budget.db
+*.db
+!sample-budget.db
 main
 test
 build/

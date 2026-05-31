@@ -2,8 +2,6 @@
 #define TRANSACTION_H
 
 #include <string>
-#include <fstream>
-#include <nlohmann/json.hpp>
 
 class Transaction {
 private:
@@ -25,18 +23,11 @@ public:
     std::string getDescription() const;
     double getAmount() const;
 
-    void save(std::ofstream &file) const;
-
     void setDate(const std::string &newDate);
     void setCategory(const std::string &newCategory);
     void setType(const std::string &newType);
     void setDescription(const std::string &newDescription);
     void setAmount(double newAmount);
-
-    static Transaction fromLine(const std::string &line);
-    
-    static Transaction fromJson(const nlohmann::json &j);
-    nlohmann::json toJson() const;
 };
 
 #endif

@@ -1,8 +1,5 @@
 #include "transaction.h"
 
-#include <vector>
-#include <stdexcept>
-
 Transaction::Transaction()
     : amount(0.0) {}
 
@@ -30,39 +27,6 @@ double Transaction::getAmount() const {
     return amount;
 }
 
-void Transaction::save(std::ofstream &file) const {
-    file << date << ";"
-         << category << ";"
-         << type << ";"
-         << amount << ";"
-         << description << "\n";
-}
-
-Transaction Transaction::fromLine(const std::string &line) {
-    std::vector<std::string> data;
-    size_t start = 0;
-    size_t pos;
-
-    while ((pos = line.find(';', start)) != std::string::npos) {
-        data.push_back(line.substr(start, pos - start));
-        start = pos + 1;
-    }
-
-    data.push_back(line.substr(start));
-
-    if (data.size() != 5) {
-        throw std::runtime_error("Invalid transaction line format.");
-    }
-
-    return Transaction(
-        data[0],
-        data[1],
-        data[2],
-        std::stod(data[3]),
-        data[4]
-    );
-}
-
 void Transaction::setDate(const std::string &newDate) {
     date = newDate;
 }
@@ -81,24 +45,4 @@ void Transaction::setDescription(const std::string &newDescription) {
 
 void Transaction::setAmount(double newAmount) {
     amount = newAmount;
-}
-
-nlohmann::json Transaction::toJson() const {
-    return {
-        {"date", date},
-        {"category", category},
-        {"type", type},
-        {"amount", amount},
-        {"description", description}
-    };
-}
-
-Transaction Transaction::fromJson(const nlohmann::json &json) {
-    return Transaction(
-        json.at("date").get<std::string>(),
-        json.at("category").get<std::string>(),
-        json.at("type").get<std::string>(),
-        json.at("amount").get<double>(),
-        json.at("description").get<std::string>()
-    );
 }
