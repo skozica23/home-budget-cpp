@@ -19,6 +19,7 @@ int main() {
                   << "\n8. Filter by Category"
                   << "\n9. Sort Transactions"
                   << "\n10. Update Transaction"
+                  << "\n11. Show Sample Data"
                   << "\n0. Exit"
                   << "\n\nChoice: ";
 
@@ -61,6 +62,9 @@ int main() {
                 break;
             case 10:
                 budget.edit();
+                break;
+            case 11:
+                budget.showSampleData();
                 break;
             case 0:
                 break;

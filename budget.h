@@ -15,6 +15,7 @@ public:
     void showAll() const;
     void save() const;
     void load();
+    void showSampleData() const;
     void remove();
     void showSummary() const;
     void filterByCategory() const;

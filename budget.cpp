@@ -16,6 +16,33 @@ static std::string toLowerCase(std::string text) {
     return text;
 }
 
+static void printTransactionsTable(const std::vector<Transaction> &transactions) {
+    std::cout << std::left << std::setw(7) << "Index" << std::setw(12) << "Date"
+              << std::setw(15) << "Category"
+              << std::setw(12) << "Type"
+              << std::setw(10) << "Amount"
+              << std::setw(25) << "Description"
+              << "\n";
+
+    std::cout << std::string(74, '-') << std::endl;
+
+    for (size_t i = 0; i < transactions.size(); i++) {
+        const auto &transaction = transactions[i];
+
+        std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
+
+        std::cout << std::left << std::setw(7) << i + 1
+                  << std::setw(12) << transaction.getDate()
+                  << std::setw(15) << transaction.getCategory()
+                  << color << std::setw(12) << transaction.getType() << "\033[0m"
+                  << std::right << std::setw(10) << std::fixed << std::setprecision(2)
+                  << transaction.getAmount()
+                  << "  "
+                  << std::left << transaction.getDescription()
+                  << std::endl;
+    }
+}
+
 void Budget::add() {
     std::string date;
     std::string category;
@@ -104,30 +131,7 @@ void Budget::showBalance() const {
 }
 
 void Budget::showAll() const {
-    std::cout << std::left << std::setw(5) << "Index" << std::setw(12) << "Date"
-              << std::setw(15) << "Category"
-              << std::setw(12) << "Type"
-              << std::setw(10) << "Amount"
-              << std::setw(25) << "Description"
-              << "\n";
-
-    std::cout << std::string(74, '-') << std::endl;
-
-    for (size_t i = 0; i < transactions.size(); i++) {
-        const auto &transaction = transactions[i];
-
-        std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
-
-        std::cout << std::left << std::setw(5) << i + 1
-                  << std::setw(12) << transaction.getDate()
-                  << std::setw(15) << transaction.getCategory()
-                  << color << std::setw(12) << transaction.getType() << "\033[0m"
-                  << std::right << std::setw(10) << std::fixed << std::setprecision(2)
-                  << transaction.getAmount()
-                  << "  "
-                  << std::left << transaction.getDescription()
-                  << std::endl;
-    }
+    printTransactionsTable(transactions);
 }
 
 void Budget::save() const {
@@ -169,6 +173,30 @@ void Budget::load() {
 
     transactions = storage.loadTransactions();
     std::cout << "Loaded from SQLite.\n";
+}
+
+void Budget::showSampleData() const {
+    SQLiteStorage storage("sample-budget.db");
+
+    if (!storage.open()) {
+        std::cout << "Error: Could not open sample database.\n";
+        return;
+    }
+
+    if (!storage.initialize()) {
+        std::cout << "Error: Could not initialize sample database.\n";
+        storage.close();
+        return;
+    }
+
+    std::vector<Transaction> sampleTransactions = storage.loadTransactions();
+
+    if (sampleTransactions.empty()) {
+        std::cout << "Sample database is empty.\n";
+        return;
+    }
+
+    printTransactionsTable(sampleTransactions);
 }
 
 void Budget::remove() {
@@ -232,7 +260,7 @@ void Budget::filterByCategory() const {
     
     std::string searchedCategory = toLowerCase(category);
 
-    std::cout << std::left << std::setw(5) << "No."
+    std::cout << std::left << std::setw(7) << "No."
               << std::setw(12) << "Date"
               << std::setw(15) << "Category"
               << std::setw(12) << "Type"
@@ -248,7 +276,7 @@ void Budget::filterByCategory() const {
         if (toLowerCase(transaction.getCategory()) == searchedCategory) {
             std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
 
-            std::cout << std::left << std::setw(5) << i + 1
+            std::cout << std::left << std::setw(7) << i + 1
                       << std::setw(12) << transaction.getDate()
                       << std::setw(15) << transaction.getCategory()
                       << color << std::setw(12) << transaction.getType() << "\033[0m"

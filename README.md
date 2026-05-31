@@ -95,13 +95,13 @@ g++ main.cpp budget.cpp transaction.cpp sqlite_storage.cpp -lsqlite3 -o main
 
 After building with CMake:
 
-```bash
+```
 ./build/home_budget
 ```
 
 After compiling manually with `g++`:
 
-```bash
+```
 ./main
 ```
 
@@ -109,7 +109,7 @@ After compiling manually with `g++`:
 
 The application saves and loads user data from a local SQLite database:
 
-```text
+```
 budget.db
 ```
 
@@ -119,7 +119,7 @@ The current implementation keeps transactions in memory while the app is running
 
 The repository also includes `sample-budget.db` with test data. In the app, choose:
 
-```text
+```
 11. Show Sample Data
 ```
 
