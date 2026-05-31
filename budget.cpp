@@ -1,11 +1,11 @@
 #include "budget.h"
+#include "sqlite_storage.h"
+
 #include <iostream>
-#include <fstream>
 #include <iomanip>
 #include <cctype>
 #include <limits>
 #include <algorithm>
-#include <nlohmann/json.hpp>
 
 // Converts a string to lowercase for case-insensitive comparisons
 static std::string toLowerCase(std::string text) {
@@ -33,18 +33,18 @@ void Budget::add() {
         }
     } while (date.empty());
 
-   // CATEGORY VALIDATION
-do {
-    std::cout << "Category: ";
-    std::cin >> category;
+    // CATEGORY VALIDATION
+    do {
+        std::cout << "Category: ";
+        std::cin >> category;
 
-    if (category.empty()) {
-        std::cout << "Category cannot be empty.\n";
-    } else if (category.find(';') != std::string::npos) {
-        std::cout << "Category cannot contain semicolons.\n";
-        category.clear();
-    }
-} while (category.empty());
+        if (category.empty()) {
+            std::cout << "Category cannot be empty.\n";
+        } else if (category.find(';') != std::string::npos) {
+            std::cout << "Category cannot contain semicolons.\n";
+            category.clear();
+        }
+    } while (category.empty());
 
     //TYPE VALIDATION
     do {
@@ -57,7 +57,7 @@ do {
     } while (type != "income" && type != "expense");
 
     //AMOUNT VALIDATION
-   do {
+    do {
         std::cout << "Amount: ";
         std::cin >> amount;
 
@@ -114,72 +114,61 @@ void Budget::showAll() const {
     std::cout << std::string(74, '-') << std::endl;
 
     for (size_t i = 0; i < transactions.size(); i++) {
-    const auto &transaction = transactions[i];
+        const auto &transaction = transactions[i];
 
-    std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
+        std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
 
-    std::cout << std::left << std::setw(5) << i + 1
-              << std::setw(12) << transaction.getDate()
-              << std::setw(15) << transaction.getCategory()
-              << color << std::setw(12) << transaction.getType() << "\033[0m"
-              << std::right << std::setw(10) << std::fixed << std::setprecision(2)
-              << transaction.getAmount()
-              << "  "
-              << std::left << transaction.getDescription()
-              << std::endl;
+        std::cout << std::left << std::setw(5) << i + 1
+                  << std::setw(12) << transaction.getDate()
+                  << std::setw(15) << transaction.getCategory()
+                  << color << std::setw(12) << transaction.getType() << "\033[0m"
+                  << std::right << std::setw(10) << std::fixed << std::setprecision(2)
+                  << transaction.getAmount()
+                  << "  "
+                  << std::left << transaction.getDescription()
+                  << std::endl;
     }
 }
 
 void Budget::save() const {
-    std::ofstream file("budget.json");
+    SQLiteStorage storage("budget.db");
 
-    if (!file) {
-        std::cout << "Error: Could not open file for saving.\n";
+    if (!storage.open()) {
+        std::cout << "Error: Could not open database for saving.\n";
         return;
     }
 
-    nlohmann::json transactionsJson = nlohmann::json::array();
-
-    for (const auto &transaction : transactions) {
-        transactionsJson.push_back(transaction.toJson());
+    if (!storage.initialize()) {
+        std::cout << "Error: Could not initialize database.\n";
+        storage.close();
+        return;
     }
 
-    file << transactionsJson.dump(4);
+    if (!storage.saveTransactions(transactions)) {
+        std::cout << "Error: Could not save transactions to database.\n";
+        storage.close();
+        return;
+    }
 
-    std::cout << "Saved.\n";
+    std::cout << "Saved to SQLite.\n";
 }
 
 void Budget::load() {
-    std::ifstream file("budget.json");
+    SQLiteStorage storage("budget.db");
 
-    if (!file) {
-        std::cout << "Error: Could not open file for loading.\n";
+    if (!storage.open()) {
+        std::cout << "Error: Could not open database for loading.\n";
         return;
     }
 
-    try {
-        nlohmann::json transactionsJson;
-        file >> transactionsJson;
-
-        if (!transactionsJson.is_array()) {
-            std::cout << "Error: Invalid JSON format. Expected an array.\n";
-            return;
-        }
-
-        transactions.clear();
-
-        for (const auto &item : transactionsJson) {
-            try {
-                transactions.push_back(Transaction::fromJson(item));
-            } catch (const std::exception &error) {
-                std::cout << "Skipped invalid transaction: " << error.what() << "\n";
-            }
-        }
-
-        std::cout << "Loaded.\n";
-    } catch (const std::exception &error) {
-        std::cout << "Error: Could not parse JSON file: " << error.what() << "\n";
+    if (!storage.initialize()) {
+        std::cout << "Error: Could not initialize database.\n";
+        storage.close();
+        return;
     }
+
+    transactions = storage.loadTransactions();
+    std::cout << "Loaded from SQLite.\n";
 }
 
 void Budget::remove() {
@@ -188,7 +177,7 @@ void Budget::remove() {
         return;
     }
 
-    size_t index;
+    size_t index = 0;
     do {
         std::cout << "Enter the index of the transaction to remove: ";
         std::cin >> index;
@@ -197,8 +186,9 @@ void Budget::remove() {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid index. Please try again.\n";
+            index = 0;
         }
-    } while (std::cin.fail() || index >= transactions.size());
+    } while (index < 1 || index > transactions.size());
 
     transactions.erase(transactions.begin() + index - 1);
     std::cout << "Transaction removed.\n";
@@ -255,7 +245,8 @@ void Budget::filterByCategory() const {
     for (size_t i = 0; i < transactions.size(); i++) {
         const auto &transaction = transactions[i];
 
-        if (toLowerCase(transaction.getCategory()) == searchedCategory) {            std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
+        if (toLowerCase(transaction.getCategory()) == searchedCategory) {
+            std::string color = transaction.getType() == "income" ? "\033[32m" : "\033[31m";
 
             std::cout << std::left << std::setw(5) << i + 1
                       << std::setw(12) << transaction.getDate()

@@ -2,7 +2,7 @@
 
 A simple C++ console application for tracking personal income and expenses.
 
-The project was created to practice basic C++ programming concepts, including classes, objects, vectors, file handling, user input, and simple data persistence.
+The project was created to practice basic C++ programming concepts, including classes, objects, vectors, user input, SQLite storage, and simple data persistence.
 
 ## Features
 
@@ -10,8 +10,9 @@ The project was created to practice basic C++ programming concepts, including cl
 - Store transaction data with date, category, type, amount, and description
 - Display all saved transactions in a formatted table
 - Calculate and display the current balance
-- Save transactions to a JSON file
-- Load transactions from a JSON file
+- Save transactions to a local SQLite database
+- Load transactions from a local SQLite database
+- Display sample transactions from `sample-budget.db`
 - Use basic terminal colors to distinguish income and expenses
 
 ## Project Structure
@@ -24,7 +25,9 @@ HomeBudget/
 ├── transaction.h
 ├── transaction.cpp
 ├── budget.h
-└── budget.cpp
+├── budget.cpp
+├── sqlite_storage.h
+└── sqlite_storage.cpp
 ```
 
 ## File Responsibilities
@@ -59,6 +62,18 @@ budget.cpp
 
 Defines the logic for adding transactions, showing the balance, displaying all transactions, saving data, and loading data.
 
+```
+sqlite_storage.h
+```
+
+Declares the `SQLiteStorage` class, which handles database access.
+
+```
+sqlite_storage.cpp
+```
+
+Creates the SQLite table and saves or loads transactions from `budget.db`.
+
 ## How To Build
 
 Using CMake:
@@ -70,10 +85,10 @@ cmake --build build
 
 The executable will be created in the `build` directory.
 
-You can also compile manually with `g++`:
+You can also compile manually with `g++` if SQLite is available on your system:
 
 ```bash
-g++ main.cpp budget.cpp transaction.cpp -o main
+g++ main.cpp budget.cpp transaction.cpp sqlite_storage.cpp -lsqlite3 -o main
 ```
 
 ## How To Run
@@ -90,23 +105,37 @@ After compiling manually with `g++`:
 ./main
 ```
 
-## Sample Data
+## Data Storage
 
-The application saves and loads user data from `budget.json`.
+The application saves and loads user data from a local SQLite database:
 
-This file is ignored by Git because it may contain private personal finance data. A sample file is included as `sample-budget.json` so the program can be tested quickly with example transactions.
-
-To use the sample data, copy it to `budget.json`:
-
-```bash
-cp sample-budget.json budget.json
+```text
+budget.db
 ```
 
-Then run the app and choose:
+This file is created automatically when the app saves or loads data. It should not be committed because it may contain private personal finance data.
 
+The current implementation keeps transactions in memory while the app is running. Choosing `Save` writes the current list to SQLite, and choosing `Load` reads transactions back from SQLite.
+
+The repository also includes `sample-budget.db` with test data. In the app, choose:
+
+```text
+11. Show Sample Data
 ```
-5. Load
-3. All
+
+This displays the sample transactions without changing your current `budget.db`.
+
+The database contains one table:
+
+```sql
+CREATE TABLE transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT NOT NULL,
+    category TEXT NOT NULL,
+    type TEXT NOT NULL,
+    amount REAL NOT NULL,
+    description TEXT
+);
 ```
 
 ## What I Practiced
@@ -116,9 +145,8 @@ Then run the app and choose:
 - Getters and encapsulation
 - `std::vector`
 - Reading user input with `std::cin` and `std::getline`
-- File handling with `std::ifstream` and `std::ofstream`
-- Basic CSV-like file parsing
-- JSON serialization with `nlohmann/json`
+- Basic SQLite usage in C++
+- Separating persistence logic into a storage class
 - Formatting output with `std::setw`, `std::fixed`, and `std::setprecision`
 - Splitting code into `.h` and `.cpp` files
 - Avoiding `using namespace std;` in larger projects
@@ -133,12 +161,14 @@ Then run the app and choose:
 - [x] Add option to delete a transaction
 - [x] Add option to search or filter transactions by category
 - [x] Add income and expense summaries
-- [x] Prevent semicolons in fields saved to the transaction file
+- [x] Prevent semicolons in transaction fields
 - [x] Add transactions sorting
 - [x] Add transactions editing
 - [x] Add CMake build configuration
-- [x] Replace text file storage with JSON
-- [ ] Move storage to SQLite
+- [x] Replace legacy file-based storage with SQLite
+- [x] Move storage to SQLite
+- [x] Remove legacy JSON storage from the application code
+- [x] Add a sample SQLite database for testing
 
 ## Notes
 
